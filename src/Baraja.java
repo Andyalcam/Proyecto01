@@ -41,13 +41,11 @@ public class Baraja{
      */
     public void revolver(){
         int size = lista.size();
-        for(int k = 0; k < lista.size(); k++){
+        for(int k = 0; k < size; k++){
             int numRan = random(lista.size()-1);
             Carta temporal = lista.remove(numRan);
-            System.out.println(temporal);
-            //lista.add(0,temporal);
+            lista.add(0,temporal);
         }
-        System.out.println(lista);
     }
 
     /**
@@ -65,10 +63,6 @@ public class Baraja{
      * @return String -- cadena que contiene la baraja.
      */
     public String toString(){
-        /*String cadena = "";
-        for (int m = 0; m<lista.size(); m++){
-            cadena += "\n"+ lista.get(m);
-        }*/
         return lista.toString();
     }
 }
