@@ -117,9 +117,10 @@ public class List<T> implements TDAList<T>{
         if(i < 0 || i > size ){
             throw new IndexOutOfBoundsException();
         }
+        T element;
         // Eliminar la cabeza
         if(i == 0){
-            T element = head.getElement();
+            element = head.getElement();
             if(size == 1){
                 head = null;
             }else{
@@ -132,11 +133,11 @@ public class List<T> implements TDAList<T>{
             for(int j = 0; j < i-1; j++){
                 aux = aux.getNext();
             }
-
+            element = aux.getNext().getElement();
             aux.setNext(aux.getNext().getNext());
 
             size--;
-            return aux.getElement();
+            return element;
         }
     }
 
