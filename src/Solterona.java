@@ -1,41 +1,45 @@
 import java.util.Random;
+import java.util.Scanner;
 
-public class Solterona{
+public class Solterona {
 
     Baraja baraja;
     int sizeBaraja;
     List<Jugador> jugadores;
     Jugador jugadorActual;
     Random random = new Random();
+    Scanner scanner = new Scanner(System.in);
     int numTurno;
 
-    public Solterona(List<Jugador> jugadores, Baraja baraja){
+    public Solterona(List<Jugador> jugadores, Baraja baraja) {
         this.baraja = baraja;
         modoDeJuego(jugadores);
         repartirBaraja(jugadores, this.baraja);
-        numTurno = random.nextInt(jugadores.size()-1);
+        numTurno = random.nextInt(jugadores.size() - 1);
         this.jugadores = jugadores;
     }
 
-    public void repartirBaraja(List<Jugador> listJugadores, Baraja baraja){
+    public void repartirBaraja(List<Jugador> listJugadores, Baraja baraja) {
         int jugadores = listJugadores.size();
         int longitudBaraja = baraja.size();
-        int jugador = random.nextInt(jugadores-1);
-        for(int i = 0; i < longitudBaraja; i++){
-            if(jugador == jugadores){jugador = 0;}
+        int jugador = random.nextInt(jugadores - 1);
+        for (int i = 0; i < longitudBaraja; i++) {
+            if (jugador == jugadores) {
+                jugador = 0;
+            }
             listJugadores.get(jugador).agregarCarta(baraja.tomarCarta());
             jugador++;
         }
     }
 
 
-    public void modoDeJuego(List<Jugador> jugadores){
-        if(jugadores.size() > 1 && jugadores.size() < 4){
-            for(int i = 0; i < 22; i++){
+    public void modoDeJuego(List<Jugador> jugadores) {
+        if (jugadores.size() > 1 && jugadores.size() < 4) {
+            for (int i = 0; i < 22; i++) {
                 baraja.remove(28);
             }
-        }else if(jugadores.size() == 4){
-            for(int i = 0; i < 12; i++){
+        } else if (jugadores.size() == 4) {
+            for (int i = 0; i < 12; i++) {
                 baraja.remove(28);
             }
         }
@@ -44,24 +48,30 @@ public class Solterona{
         baraja.revolver();
     }
 
-    public void juego(){
+    public void juego() {
         jugadorActual = jugadores.get(numTurno);
         turno();
-        System.out.println("Tienes en la mano " + paresMano() + " pares.");
+        int pares = paresMano();
+        while (pares != 0) {
+            System.out.println("Ingresa los indices de las parejas Ej: 2,3");
+            scanner.next();
+            
+        }
     }
 
-    public boolean perdedor(){
+    public boolean perdedor() {
         return sizeBaraja == 1;
     }
 
 
-    public void turno(){
-        if(jugadorActual.isCPU()){//Si es la máquina
+    public void turno() {
+        if (jugadorActual.isCPU()) {//Si es la máquina
 
-        }else{//Si es una persona
+        } else {//Si es una persona
             System.out.println((jugadorActual.printDeck()));
         }
     }
+
 
     public int paresMano(){
         List<Carta> manoAux = jugadorActual.getMano();
@@ -75,8 +85,10 @@ public class Solterona{
         }
         int repeticiones = 0;
         int pares = 0;
+        System.out.println(valoresMano);
         for(int i = 0; i < valoresMano.size(); i++){
-            for(int j = 0; j < manoAux.size(); i++){
+            repeticiones = 0;
+            for(int j = 0; j < manoAux.size(); j++){
                 if(valoresMano.get(i).equals(manoAux.get(j).getValor()+"")){
                     repeticiones++;
                 }

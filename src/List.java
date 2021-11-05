@@ -88,7 +88,7 @@ public class List<T> implements TDAList<T>{
             return (T) head.getElement();
         }else{
             Node aux = head;
-            for(int j = 0; j <= (i-1); j++){
+            for(int j = 0; j < i; j++){
                 aux = aux.getNext();
             }
             return (T) aux.getElement();
@@ -202,12 +202,11 @@ public class List<T> implements TDAList<T>{
 
     public static void main(String[] args) {
         List<String> list = new List<>();
-        list.add(0,"Milly");
-        list.add(1,"Zuky");
-        list.add(2, "Zuly");
-        list.add(3,"Wofito");
+        for(int i = 0; i < 9; i++){
+            list.add(i,i+"");
+        }
 
-        System.out.println(list.get(2));
+        System.out.println(list.get(9));
 
     }
 
