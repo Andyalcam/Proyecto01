@@ -49,13 +49,15 @@ public class Solterona {
     }
 
     public void juego() {
-        jugadorActual = jugadores.get(numTurno);
-        turno();
-        int pares = paresMano();
-        while (pares != 0) {
-            System.out.println("Ingresa los indices de las parejas Ej: 2,3");
-            scanner.next();
-            
+        while(!perdedor()){
+
+            if(numTurno == jugadores.size()){
+                numTurno = 0;
+            }
+
+            jugadorActual = jugadores.get(numTurno);
+            turno();
+            numTurno++;
         }
     }
 
@@ -66,9 +68,69 @@ public class Solterona {
 
     public void turno() {
         if (jugadorActual.isCPU()) {//Si es la máquina
-
-        } else {//Si es una persona
             System.out.println((jugadorActual.printDeck()));
+            int pares = paresMano();
+            if(pares == 1){
+                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
+            }else{
+                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
+            }
+            while (pares != 0) {
+                for(int i=0; i<jugadorActual.getMano().size(); i++){
+                    for(int j=0; j<jugadorActual.getMano().size(); j++){
+                        if(jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()){
+                            jugadorActual.getMano().remove(i);
+                            jugadorActual.getMano().remove(j-1);
+                            System.out.println(jugadorActual.printDeck());
+                            pares--;
+                            sizeBaraja-=2;
+                        }else{
+                            //System.out.println("Tus cartas no son pares");
+                        }
+                    }
+                }
+            }
+            System.out.println("Ya no tienes mas pares :c");
+        } else {//Si es una persona
+            int i=0,j=0;
+            boolean repe = true;
+            String tupla = "";
+            System.out.println((jugadorActual.printDeck()));
+            int pares = paresMano();
+            if(pares == 1){
+                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
+            }else{
+                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
+            }
+            while (repe) {
+                while (pares != 0) {
+                    try{
+                        System.out.println("Ingresa los indices de las parejas Ej: 2,3");
+                        tupla = scanner.nextLine().trim();
+                        i = Integer.parseInt(tupla.split(",")[0]);
+                        j = Integer.parseInt(tupla.split(",")[1]);
+                        repe = false;
+                    }catch(Exception e){
+                        System.out.println("\t Intentalo de nuevo. Sigue el ejemplo :)\n");
+                        repe = true;
+                    }
+                    if(jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()){
+                        if(i<j){
+                            jugadorActual.getMano().remove(i);
+                            jugadorActual.getMano().remove(j-1);
+                        }else{
+                            jugadorActual.getMano().remove(i);
+                            jugadorActual.getMano().remove(j);
+                        }
+                        System.out.println(jugadorActual.printDeck());
+                        pares--;
+                        sizeBaraja-=2;
+                    }else{
+                        System.out.println("Tus cartas no son pares");
+                    }
+                }
+                System.out.println("Ya no tienes mas pares :c");
+            }
         }
     }
 
@@ -85,7 +147,6 @@ public class Solterona {
         }
         int repeticiones = 0;
         int pares = 0;
-        System.out.println(valoresMano);
         for(int i = 0; i < valoresMano.size(); i++){
             repeticiones = 0;
             for(int j = 0; j < manoAux.size(); j++){
