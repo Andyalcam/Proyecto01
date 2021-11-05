@@ -24,14 +24,14 @@ public class List<T> implements TDAList<T>{
 
         Node newNode = new Node(e);
 
-        if(head == null){//Si la lista es vacia
+        if(head == null){//Si la lista es vacía
             head = newNode;
         }else if(i == 0){//Si se va agregar al inicio
             newNode.setNext(head);
             head = newNode;
         }else{//Cuando se agrega en cualquier otra posición
             Node iterator = head;
-            for(int j = 0; j < i; j++){
+            for(int j = 0; j < i-1; j++){
                 iterator = iterator.getNext();
             }
             newNode.setNext(iterator.getNext());
@@ -53,7 +53,7 @@ public class List<T> implements TDAList<T>{
      * Verifica si un elemento está contenido en la lista.
      *
      * @param e el elemento a verificar si está contenido.
-     * @return true si el elemento está contenid, false en otro caso.
+     * @return true si el elemento está contenido, false en otro caso.
      */
     @Override
     public boolean contains(T e) {
@@ -85,13 +85,13 @@ public class List<T> implements TDAList<T>{
         }else if(isEmpty()){
             return null;
         }else if(i == 0){
-            return head.getElement();
+            return (T) head.getElement();
         }else{
             Node aux = head;
-            for(int j = 0; j < i-1; j++){
+            for(int j = 0; j <= (i-1); j++){
                 aux = aux.getNext();
             }
-            return aux.getElement();
+            return (T) aux.getElement();
         }
     }
 
@@ -120,25 +120,23 @@ public class List<T> implements TDAList<T>{
         T element;
         // Eliminar la cabeza
         if(i == 0){
-            element = head.getElement();
+            element = (T) head.getElement();
             if(size == 1){
                 head = null;
             }else{
                 head = head.getNext();
             }
-            size--;
-            return element;
         }else{
             Node aux = head;
             for(int j = 0; j < i-1; j++){
                 aux = aux.getNext();
             }
-            element = aux.getNext().getElement();
+            element = (T) aux.getNext().getElement();
             aux.setNext(aux.getNext().getNext());
 
-            size--;
-            return element;
         }
+        size--;
+        return element;
     }
 
     /**
@@ -161,15 +159,18 @@ public class List<T> implements TDAList<T>{
     /**
      * Da la mitad derecha o izquierda de una lista.
      *
-     * @param side la mitad que recortar de la lista original.
-     *             true - mitad derecha.
-     *             false - mitad izquierda.
+     * @param side La mitad que recortar de la lista original.
+     *             True - mitad derecha.
+     *             False - mitad izquierda.
      * @return una nueva lista con la mitad de los elementos.
      */
     @Override
     public TDAList cut(boolean side) {
         return null;
     }
+
+    /**
+     *
 
     /**
      * Da un iterador para la lista.
@@ -181,61 +182,34 @@ public class List<T> implements TDAList<T>{
         return null;
     }
 
-
-    // Clase Node encargada de implementar la lista simplemente ligada.
-    public class Node{
-
-        T element;
-        Node next;
-
-        /**
-         * Constructor para crear un nodo.
-         * @param element - objeto de tipo generico.
-         */
-        public Node(T element) {
-            this.element = element;
-        }
-
-        /**
-         * Metodo para obtener el elemento del nodo.
-         * @return T - objeto de tipo generico que representa el nodo.
-         */
-        public T getElement() {
-            return element;
-        }
-
-        /**
-         * Metodo que regresa el nodo siguiente respecto a uno.
-         * @return Node - nodo siguiente.
-         */
-        public Node getNext() {
-            return next;
-        }
-
-        /**
-         * Metodo para asignarle a un nodo un nodo siguiente.
-         * @param next - objeto de tipo nodo.
-         */
-        public void setNext(Node next) {
-            this.next = next;
-        }
-    }
-
     /**
-     * Metodo para imprimir la lista simplemente ligada.
-     * @return String - con la cadena de elementos que contiene la lista y si es vacia, lo indica.
+     * Método para imprimir la lista simplemente ligada.
+     * @return String - con la cadena de elementos que contiene la lista y si es vacía, lo indica.
      */
     @Override
     public String toString() {
         if(!isEmpty()) {
-            String result = "";
+            StringBuilder result = new StringBuilder();
             Node aux = head;
             while (aux != null) {
-                result += aux.getElement() + ", ";
+                result.append(aux.getElement()).append(", ");
                 aux = aux.getNext();
             }
             return result.substring(0, result.length() - 2);
         }
         return "La lista es vacía";
     }
+
+    public static void main(String[] args) {
+        List<String> list = new List<>();
+        list.add(0,"Milly");
+        list.add(1,"Zuky");
+        list.add(2, "Zuly");
+        list.add(3,"Wofito");
+
+        System.out.println(list.get(2));
+
+    }
+
+
 }

@@ -6,7 +6,7 @@
 public class Carta{
    private  int valor;
    private final int figura;
-   public final String[] figuras = new String[]{null, "diamante", "trebol", "corazon", "picas"};
+   public final String[] figuras = new String[]{null, "diamante", "trébol", "corazon", "picas"};
    public final String[] valores = new String[]{null, "as", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "J", "Q", "K"};
 
    /**
@@ -34,25 +34,7 @@ public class Carta{
    }
 
    /**
-    * Constructor para crear una carta a partir de dos String
-    * @param var1 - cadena para el valor de la carta
-    * @param var2 - cadena para la figura de la carta
-    */
-   public Carta(String var1, String var2) {
-      this.valor = this.esValorValido(var1);
-      if (this.valor == 0) {
-         System.out.println("El valor " + var1 + " es incorrecto.");
-      }
-
-      this.figura = this.esFiguraValida(var2);
-      if (this.figura == 0) {
-         System.out.println("La figura " + var2 + " es incorrecta.");
-      }
-
-   }
-
-   /**
-    * Metodo para obtener la figura de la carta como int
+    * Método para obtener la figura de la carta como int
     * @return figura de la carta
     */
    public int obtenerFigura() {
@@ -60,7 +42,7 @@ public class Carta{
    }
 
    /**
-    * Metodo para obtener la figura de la carta como string
+    * Método para obtener la figura de la carta como string
     * @return figura de la carta
     */
    public String obtenerNombreFigura() {
@@ -68,23 +50,23 @@ public class Carta{
    }
 
    /**
-    * Metodo para obtener el valor de la carta como string
+    * Método para obtener el valor de la carta como string
     * @return valor de la carta
     */
    public String obtenerNombreValor() {
-      return this.valor > 0 && this.valor < 14 ? this.valores[this.valor] : null;
+      return ((this.valor > 0) && (this.valor < 14)) ? this.valores[this.valor] : null;
    }
 
    /**
-    * Metodo para obtener el valor de la carta como int
+    * Método para obtener el valor de la carta como int
     * @return valor de la carta
     */
-   public int obtenerValor() {
+   public int getValor() {
       return this.valor;
    }
 
    /**
-    * Metodo para asignar un nuevo valor a la carta
+    * Método para asignar un nuevo valor a la carta
     * @param valorN - valor para el nuevo valor
     */
    public void asignarValor(int valorN){
@@ -92,7 +74,7 @@ public class Carta{
    }
 
    /**
-    * Metodo para saber si un valor es valido
+    * Método para saber si un valor es válido
     * @param var1 - valor que se desea saber
     * @return int - 0
     */
@@ -109,7 +91,7 @@ public class Carta{
    }
 
    /**
-    * Metodo para saber si una figura es valida
+    * Método para saber si una figura es válida
     * @param var1 - figura que se desea saber
     * @return int - 0
     */
@@ -126,17 +108,16 @@ public class Carta{
    }
 
    /**
-    * Metodo para saber si una carta es igual a otra
+    * Método para saber si una carta es igual a otra
     * @param var1 - objeto de tipo carta a comparar
     * @return boolean - true si son iguales, false si no lo son
     */
-   public boolean equals(Object var1) {
-      Carta var2 = (Carta)var1;
-      return this.valor == var2.valor && this.figura == var2.figura;
+   public boolean equals(Carta var1) {
+      return this.valor == var1.valor && this.figura == var1.figura;
    }
 
    /**
-    * Metodo para imprimir el objeto y sus atributos
+    * Método para imprimir el objeto y sus atributos
     * @return String - imprime en consola con formato
     */
    public String toString() {
