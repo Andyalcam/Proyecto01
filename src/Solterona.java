@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.lang.NumberFormatException;
+import java.lang.IndexOutOfBoundsException;
 
 public class Solterona {
 
@@ -133,30 +135,37 @@ public class Solterona {
                         tupla = scanner.nextLine().trim();
                         i = Integer.parseInt(tupla.split(",")[0]);
                         j = Integer.parseInt(tupla.split(",")[1]);
-                        repe = false;
-                    }catch(Exception e){
+                        if(i!=j){
+                            if(jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()){
+                                if(i<j){
+                                    jugadorActual.getMano().remove(i);
+                                    jugadorActual.getMano().remove(j-1);
+                                }else{
+                                    jugadorActual.getMano().remove(i);
+                                    jugadorActual.getMano().remove(j);
+                                }
+                                System.out.println(jugadorActual.printDeck());
+                                pares--;
+                                sizeBaraja-=2;
+                                if(pares == 1){
+                                    System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
+                                }else{
+                                    System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
+                                }
+                            }else{
+                                System.out.println("Tus cartas no son pares");
+                            }
+                            repe = false;
+                        }else{
+                            System.out.println("\t No puedes ingresar las mismas cartas :c\n");
+                            repe = true;
+                        }
+                    }catch(NumberFormatException e){
                         System.out.println("\t Intentalo de nuevo. Sigue el ejemplo :)\n");
                         repe = true;
-                    }
-                        if(jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()){
-                            if(i<j){
-                                jugadorActual.getMano().remove(i);
-                                jugadorActual.getMano().remove(j-1);
-                            }else{
-                                jugadorActual.getMano().remove(i);
-                                jugadorActual.getMano().remove(j);
-                            }
-                            System.out.println(jugadorActual.printDeck());
-                            pares--;
-                            sizeBaraja-=2;
-                            if(pares == 1){
-                                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
-                            }else{
-                                System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
-                            }
-                        }else{
-                            System.out.println("Tus cartas no son pares");
-                        }
+                    }catch(IndexOutOfBoundsException e){
+                        System.out.println("\t Ingresa indices dentro de los rangos :)\n");
+                    }   
                 }
                 System.out.println("Ya no tienes mas pares :c\n");
                 repe = false;

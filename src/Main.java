@@ -15,10 +15,10 @@ public class Main{
 			System.out.println("Ingresa el número de jugadores que jugarán");
 			try{
 				jugadores = scanner.nextInt();
-				if(jugadores>1 && jugadores<11){
+				if(jugadores>0 && jugadores<11){
 					repe = false;
 				}else{
-					System.out.println("\tDebes ingresar un número del 2 al 10\n");
+					System.out.println("\tDebes ingresar un número del 1 al 10\n");
 				}
 			}catch(Exception e){
 				System.out.println("\tDebes ingresar un número\n");
@@ -28,12 +28,38 @@ public class Main{
 		repe = true;
 
 		while(repe){
-			System.out.println("Ingresa el numero de jugadores CPU, si no quieres jugar contra la maquina ingresa 0");
 			try{
-				jugadoresCPU = scanner.nextInt();
-				repe = false;
+				if(jugadores == 1){
+					System.out.println("Ingresa el numero de jugadores CPU");
+					jugadoresCPU = scanner.nextInt();
+					if(jugadoresCPU <= 0){
+						System.out.println("\t Debes ingresar al menos un contrincante CPU\n");
+						repe = true;
+					}else if((jugadores+jugadoresCPU)>10){
+						System.out.println("\t No puede haber más de 10 jugadores en total :c\n");
+						repe = true;
+					}else{
+						repe = false;
+					}
+				}else if(jugadores == 10){
+					System.out.println("Ningun CPU jugará :c\n");
+					repe = false;
+				}else{
+					System.out.println("Ingresa el numero de jugadores CPU, si no quieres jugar contra la maquina ingresa 0");
+					jugadoresCPU = scanner.nextInt();
+					if((jugadores+jugadoresCPU)>10){
+						System.out.println("\t No puede haber más de 10 jugadores en total :c\n");
+						repe = true;
+					}else{
+						repe = false;
+					}
+				}
 			}catch(Exception e){
-				System.out.println("Ingresa solo numeros");
+				if(jugadores==1){
+					System.out.println("\t Ingresa números del 1 al " + (10-jugadores) + "\n");
+				}else{
+					System.out.println("\t Ingresa números del 0 al " + (10-jugadores) + "\n");
+				}
 				scanner.next();
 			}
 		}
@@ -51,18 +77,6 @@ public class Main{
 		Solterona solterona = new Solterona(jugadorList, baraja);
 
 		solterona.juego();
-
-
-
-
-		/*System.out.println(baraja+"\n");
-		baraja.revolver();
-		System.out.println(baraja);*/
-
-
-
-
-
 	}
 
 }
