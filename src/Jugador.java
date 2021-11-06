@@ -16,17 +16,12 @@ public class Jugador {
      * Constructor que crea un objeto de tipo jugador
      *
      * @param nombre - string con el nombre del jugador
+     * @param persona - boolean que dice si es persona o no
      */
-    public Jugador(String nombre) {
+    public Jugador(String nombre, boolean persona) {
        this.nombre = nombre;
        mano = new List<>();
-       persona = true;
-    }
-
-    public Jugador() {
-       this.nombre = "CPU";
-       mano = new List<>();
-       persona = false;
+       this.persona = persona;
     }
 
     /**
@@ -56,9 +51,16 @@ public class Jugador {
        this.mano = mano;
     }
 
-     public List<Carta> getMano() {
+     /**
+      * Metodo que regresa la mano del jugador
+      * @return mano del jugador
+      */
+
+    public List<Carta> getMano() {
          return mano;
      }
+
+
 
      /**
      * Método para imprimir la mano del jugador
