@@ -199,16 +199,4 @@ public class List<T> implements TDAList<T>{
         }
         return "La lista es vacía";
     }
-
-    public static void main(String[] args) {
-        List<String> list = new List<>();
-        for(int i = 0; i < 9; i++){
-            list.add(i,i+"");
-        }
-
-        System.out.println(list.get(9));
-
-    }
-
-
 }

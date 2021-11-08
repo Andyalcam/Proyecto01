@@ -4,10 +4,20 @@
  * @version 1.2
  */
 public class Carta{
-   private  int valor;
-   private final int figura;
+
+   // Colores de fondo
+   String whiteBG = "\u001B[47m";
+   // Colores de letra
+   String red="\033[31m"; 
+   String black="\u001B[30m";
+   // Reset
+   String reset="\u001B[0m";
+
+   private int valor;
+   private int figura;
    public final String[] figuras = new String[]{null, "diamante", "trébol", "corazon", "picas"};
-   public final String[] valores = new String[]{null, "as", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "J", "Q", "K"};
+   public final String[] dibujos = new String[]{null, red+" ♦ "+reset, black+" ♣ "+reset, red+" ♥ "+reset, black+" ♠ "+reset};
+   public final String[] valores = new String[]{null, " A", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " J", " Q", " K"};
 
    /**
     * Constructor para crear una carta a partir de dos enteros
@@ -121,16 +131,16 @@ public class Carta{
     * @return String - imprime en consola con formato
     */
    public String toString() {
-      return this.valores[this.valor] + " de " + this.figuras[this.figura];
-   }
-
-   public static void main(String[] var0) {
-      Carta[] var1 = new Carta[52];
-
-      for(int var2 = 0; var2 < var1.length; ++var2) {
-         var1[var2] = new Carta(var2 % 13 + 1, var2 / 13 + 1);
-         System.out.println(var1[var2]);
+      String valor="";
+      if(this.obtenerNombreFigura().equals("diamante")){
+         valor = red+this.valores[this.valor]+reset;
+      }else if(this.obtenerNombreFigura().equals("trébol")){
+         valor = black+this.valores[this.valor]+reset;
+      }else if(this.obtenerNombreFigura().equals("corazon")){
+         valor = red+this.valores[this.valor]+reset;
+      }else if(this.obtenerNombreFigura().equals("picas")){
+         valor = black+this.valores[this.valor]+reset;
       }
-
+      return whiteBG + valor + whiteBG + this.dibujos[this.figura] + reset;
    }
 }

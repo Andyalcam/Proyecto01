@@ -4,6 +4,24 @@ import java.util.InputMismatchException;
 public class Main{
 	public static void main(String []args){
 
+		// Colores de fondo
+		String blackBG = "\u001B[40m";
+		String redBG = "\u001B[41m";
+		String greenBG = "\u001B[42m";
+		String yellowBG = "\u001B[43m";
+		String blueBG = "\u001B[44m";
+		String purpleBG = "\u001B[45m";
+		String cyanBG = "\u001B[46m";
+		String whiteBG = "\u001B[47m";
+		// Colores de letra
+	    String red="\033[31m"; 
+	    String green="\033[32m"; 
+	    String yellow="\033[33m";
+	    String cyan="\033[36m";
+	    String black="\u001B[30m";
+	    // Reset
+	    String reset="\u001B[0m";
+
 		List<Jugador> jugadorList = new List<>();
 		Baraja baraja = new Baraja();
 		Scanner scanner = new Scanner(System.in);
@@ -12,7 +30,7 @@ public class Main{
 		boolean repe = true;
 
 		while(repe){
-			System.out.println("Ingresa el número de jugadores que jugarán");
+			System.out.println("Ingresa el número de jugadores que jugarán "+whiteBG+red+" ♣ ♦ ♥ ♠"+black+" ♣ ♦ ♥ ♠ "+reset+reset);
 			try{
 				jugadores = scanner.nextInt();
 				if(jugadores>0 && jugadores<11){

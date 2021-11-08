@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.lang.NumberFormatException;
 import java.lang.IndexOutOfBoundsException;
+import java.lang.NullPointerException;
 
 public class Solterona {
 
@@ -59,9 +60,10 @@ public class Solterona {
 
     public void juego() {
         while(!perdedor()){
-            if(numTurno >= jugadores.size()){
+            if(numTurno == jugadores.size()){
                 numTurno = 0;
             }
+            jugadorAnterior = jugadorActual;
             jugadorActual = jugadores.get(numTurno);
             if(jugadorAnterior.getMano().size() != 0){
                 System.out.println("Es el turno de " + jugadorActual.getNombre());
@@ -95,6 +97,9 @@ public class Solterona {
             }else{
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
             }
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){}
             while (pares != 0) {
                 for(int i=0; i<jugadorActual.getMano().size(); i++){
                     for(int j=0; j<jugadorActual.getMano().size(); j++){
@@ -108,6 +113,9 @@ public class Solterona {
                                     jugadorActual.getMano().remove(j);
                                 }
                                 System.out.println(jugadorActual.printDeck());
+                                try{
+                                    Thread.sleep(1000);
+                                }catch (InterruptedException e){}
                                 pares--;
                                 sizeBaraja -= 2;
                                 break;
@@ -165,7 +173,11 @@ public class Solterona {
                         repe = true;
                     }catch(IndexOutOfBoundsException e){
                         System.out.println("\t Ingresa indices dentro de los rangos :)\n");
-                    }   
+                        repe = true;
+                    }catch(NullPointerException e){
+                        System.out.println("\t Ingresa indices dentro de los rangos :)\n");
+                        repe = true;
+                    } 
                 }
                 System.out.println("Ya no tienes mas pares :c\n");
                 repe = false;
