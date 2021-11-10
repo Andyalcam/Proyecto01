@@ -66,8 +66,21 @@ public class Solterona {
             jugadorAnterior = jugadorActual;
             jugadorActual = jugadores.get(numTurno);
             if(jugadorAnterior.getMano().size() != 0){
-                System.out.println("Es el turno de " + jugadorActual.getNombre());
+                System.out.println("Es el turno de " + jugadorActual.getNombre() + " " + numTurno);
                 robarCarta();
+                if(jugadorAnterior.getMano().size()==0){
+                    if(numTurno==0){
+                        System.out.println("El jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego");
+                        jugadores.remove(jugadores.size()-1);
+                        System.out.println(numTurno);
+                        numTurno = jugadores.size()-1;
+                    }else{
+                        System.out.println("El jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego");
+                        jugadores.remove(numTurno-1);
+                        System.out.println(numTurno);
+                        numTurno--;
+                    }
+                }
                 turno();
             }
             numTurno++;
@@ -77,7 +90,7 @@ public class Solterona {
         }
         for(int i = 0 ; i < jugadores.size(); i++){
             if(jugadores.get(i).getMano().size() == 1){
-                System.out.println("Perdio " + jugadores.get(i).getNombre() + " Se quedo con la solterona jijijija");
+                System.out.println("Perdió " + jugadores.get(i).getNombre() + " , se quedo con la solterona jijijija");
                 System.out.println("La solterona fue: " + jugadores.get(i).getManoToString());
             }
         }
@@ -94,7 +107,7 @@ public class Solterona {
             int pares = paresMano();
             if(pares == 1){
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
-            }else{
+            }else if(pares !=0){
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
             }
             try{
@@ -133,7 +146,7 @@ public class Solterona {
             int pares = paresMano();
             if(pares == 1){
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
-            }else{
+            }else if(pares !=0){
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
             }
             while (repe) {
@@ -161,7 +174,7 @@ public class Solterona {
                                     System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
                                 }
                             }else{
-                                System.out.println("Tus cartas no son pares");
+                                System.out.println("\tTus cartas no son pares :c\n");
                             }
                             repe = false;
                         }else{

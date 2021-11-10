@@ -30,7 +30,7 @@ public class Main{
 		boolean repe = true;
 
 		while(repe){
-			System.out.println("Ingresa el número de jugadores que jugarán "+whiteBG+red+" ♣ ♦ ♥ ♠"+black+" ♣ ♦ ♥ ♠ "+reset+reset);
+			System.out.println("Ingresa el número de jugadores que jugarán ");
 			try{
 				jugadores = scanner.nextInt();
 				if(jugadores>0 && jugadores<11){

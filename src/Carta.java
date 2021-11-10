@@ -141,6 +141,6 @@ public class Carta{
       }else if(this.obtenerNombreFigura().equals("picas")){
          valor = black+this.valores[this.valor]+reset;
       }
-      return whiteBG + valor + whiteBG + this.dibujos[this.figura] + reset;
+      return reset + whiteBG + valor + whiteBG + this.dibujos[this.figura] + reset;
    }
 }
