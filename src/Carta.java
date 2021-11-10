@@ -1,6 +1,7 @@
 /**
  * Clase que crea objetos de tipo carta
  * @author Andrea Alvarado Camacho
+ * @author Alfonso Mondragón Segoviano
  * @version 1.2
  */
 public class Carta{
@@ -20,16 +21,6 @@ public class Carta{
    public final String[] valores = new String[]{null, " A", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " J", " Q", " K"};
 
    /**
-    * Constructor para crear una carta a partir de dos enteros
-    * @param var1 - int para el valor de la carta
-    * @param var2 - int para la figura de la carta
-    */
-   public Carta(int var1, int var2) {
-      this.valor = var1 > 0 && var1 < 14 ? var1 : 0;
-      this.figura = var2 > 0 && var2 < 5 ? var2 : 0;
-   }
-
-   /**
     * Constructor para crear una carta a partir de un entero y un string
     * @param var1 - int para el valor de la carta
     * @param var2 - String para la figura de la carta
@@ -44,14 +35,6 @@ public class Carta{
    }
 
    /**
-    * Método para obtener la figura de la carta como int
-    * @return figura de la carta
-    */
-   public int obtenerFigura() {
-      return this.figura;
-   }
-
-   /**
     * Método para obtener la figura de la carta como string
     * @return figura de la carta
     */
@@ -60,44 +43,11 @@ public class Carta{
    }
 
    /**
-    * Método para obtener el valor de la carta como string
-    * @return valor de la carta
-    */
-   public String obtenerNombreValor() {
-      return ((this.valor > 0) && (this.valor < 14)) ? this.valores[this.valor] : null;
-   }
-
-   /**
     * Método para obtener el valor de la carta como int
     * @return valor de la carta
     */
    public int getValor() {
       return this.valor;
-   }
-
-   /**
-    * Método para asignar un nuevo valor a la carta
-    * @param valorN - valor para el nuevo valor
-    */
-   public void asignarValor(int valorN){
-      this.valor = valorN;
-   }
-
-   /**
-    * Método para saber si un valor es válido
-    * @param var1 - valor que se desea saber
-    * @return int - 0
-    */
-   public int esValorValido(String var1) {
-      var1 = var1.trim().toLowerCase();
-
-      for(int var2 = 1; var2 < this.valores.length; ++var2) {
-         if (this.valores[var2].equals(var1)) {
-            return var2;
-         }
-      }
-
-      return 0;
    }
 
    /**
@@ -115,15 +65,6 @@ public class Carta{
       }
 
       return 0;
-   }
-
-   /**
-    * Método para saber si una carta es igual a otra
-    * @param var1 - objeto de tipo carta a comparar
-    * @return boolean - true si son iguales, false si no lo son
-    */
-   public boolean equals(Carta var1) {
-      return this.valor == var1.valor && this.figura == var1.figura;
    }
 
    /**

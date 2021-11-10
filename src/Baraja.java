@@ -6,7 +6,6 @@
 public class Baraja{
 
     protected List<Carta> lista;
-    protected int contador = 0;
 
     /**
      * Constructor por omisión que crea una lista con 52 cartas
@@ -47,16 +46,6 @@ public class Baraja{
             Carta temporal = lista.remove(numRan);
             lista.add(0,temporal);
         }
-    }
-
-    /**
-     * Método para comparar dos cartas
-     * @param a -- carta con la que se va a comparar
-     * @param b -- carta con la que se va a comparar
-     * @return boolean -- true si son iguales y false en otro caso.
-     */
-    public boolean equals (Carta a, Carta b){
-    return (a.getValor()==b.getValor() || a.obtenerFigura()==b.obtenerFigura());
     }
 
     /**

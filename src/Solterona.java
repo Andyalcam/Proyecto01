@@ -15,12 +15,18 @@ public class Solterona {
     Scanner scanner = new Scanner(System.in);
     int numTurno;
 
+    /**
+     * Constructor para el juego de Solterona.
+     * @param jugadores - Lista de los que van a jugar.
+     * @param baraja - Baraja con la que se jugará.
+     */
+
     public Solterona(List<Jugador> jugadores, Baraja baraja) {
         this.baraja = baraja;
-        modoDeJuego(jugadores);
-        repartirBaraja(jugadores, this.baraja);
-        numTurno = random.nextInt(jugadores.size() - 1);
         this.jugadores = jugadores;
+        modoDeJuego();
+        repartirBaraja();
+        numTurno = random.nextInt(jugadores.size() - 1);
         jugadorActual = jugadores.get(numTurno);
         if(numTurno == 0){
             jugadorAnterior = jugadores.get((jugadores.size()-1));
@@ -29,21 +35,26 @@ public class Solterona {
         }
     }
 
-    public void repartirBaraja(List<Jugador> listJugadores, Baraja baraja) {
-        int jugadores = listJugadores.size();
+    /**
+     * Método para repartir la baraja revuelta con todos los jugadores.
+     */
+    public void repartirBaraja() {
+        int jugadores = this.jugadores.size();
         int longitudBaraja = baraja.size();
         int jugador = random.nextInt(jugadores - 1);
         for (int i = 0; i < longitudBaraja; i++) {
             if (jugador == jugadores) {
                 jugador = 0;
             }
-            listJugadores.get(jugador).agregarCarta(baraja.tomarCarta());
+            this.jugadores.get(jugador).agregarCarta(baraja.tomarCarta());
             jugador++;
         }
     }
 
-
-    public void modoDeJuego(List<Jugador> jugadores) {
+    /**
+     * Método para revolver y modificar el tamaño de la baraja.
+     */
+    public void modoDeJuego() {
         if (jugadores.size() > 1 && jugadores.size() < 4) {
             for (int i = 0; i < 22; i++) {
                 baraja.remove(28);
@@ -58,6 +69,9 @@ public class Solterona {
         baraja.revolver();
     }
 
+    /**
+     * Método para la inicialización del juego.
+     */
     public void juego() {
         while(!perdedor()){
             if(numTurno == jugadores.size()){
@@ -96,11 +110,21 @@ public class Solterona {
         }
     }
 
+    /**
+     * Método para saber si ya hay algún perdedor.
+     * @return true - Si solo queda la solterona.
+     * false - Si aún hay más pares en juego.
+     */
     public boolean perdedor() {
         return sizeBaraja == 1;
     }
 
-
+    /**
+     * Método que indicará de quien es turno y le muestra sus opciones de juego, en caso de ser CPU automatiza el proceso.
+     * @throws NumberFormatException - Si el usuario no ingresa números.
+     * @throws IndexOutOfBoundsException - Si el usuario ingresa números que no están en lo parámetros.
+     * @throws NullPointerException - Si el usuario ingresa números que no están en lo parámetros.
+     */
     public void turno() {
         if (jugadorActual.isCPU()) {//Si es la máquina
             System.out.println((jugadorActual.printDeck()));
@@ -139,7 +163,7 @@ public class Solterona {
             }
             System.out.println("Ya no tienes mas pares :c" + "\n");
         } else {//Si es una persona
-            int i=0,j=0;
+            int i,j;
             boolean repe = true;
             String tupla = "";
             System.out.println((jugadorActual.printDeck()));

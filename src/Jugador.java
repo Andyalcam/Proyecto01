@@ -1,10 +1,8 @@
-import java.util.Random;
-
  /**
  * Clase que extiende a la clase Persona para Jugador
  * @author Andrea Alvarado Camacho
  * @author Alfonso Mondragon Segoviano
- * @version 1.0
+ * @version 1.2
  */
 
 public class Jugador {
@@ -33,29 +31,10 @@ public class Jugador {
        return this.nombre;
     }
 
-    /**
-     * Método para editar el nombre del jugador
-     *
-     * @param nomN - String con el nombre nuevo
-     */
-    public void editarNombre(String nomN) {
-       this.nombre = nomN;
-    }
-
-    /**
-     * Método para asignarle una mano al jugador
-     *
-     * @param mano - Lista de cartas con las que jugará el jugador
-     */
-    public void setMano(List<Carta> mano) {
-       this.mano = mano;
-    }
-
      /**
       * Metodo que regresa la mano del jugador
       * @return mano del jugador
       */
-
     public List<Carta> getMano() {
          return mano;
      }
