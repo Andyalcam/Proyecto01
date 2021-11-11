@@ -1,6 +1,7 @@
 /**
  * Clase que crea una baraja de cartas
  * @author Andrea Alvarado Camacho
+ * @author Alfonso Mondragón Segoviano
  * @version 1.2
  */
 public class Baraja{
