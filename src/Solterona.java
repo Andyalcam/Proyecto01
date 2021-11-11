@@ -7,21 +7,11 @@ import java.util.InputMismatchException;
 
 public class Solterona {
 
-    // Colores de fondo
-    String blackBG = "\u001B[40m";
-    String redBG = "\u001B[41m";
-    String greenBG = "\u001B[42m";
-    String yellowBG = "\u001B[43m";
-    String blueBG = "\u001B[44m";
-    String purpleBG = "\u001B[45m";
-    String cyanBG = "\u001B[46m";
-    String whiteBG = "\u001B[47m";
     // Colores de letra
     String red="\033[31m"; 
     String green="\033[32m"; 
     String yellow="\033[33m";
-    String cyan="\033[36m";
-    String black="\u001B[30m";
+
     // Reset
     String reset="\u001B[0m";
 
@@ -294,7 +284,10 @@ public class Solterona {
         }
     }
 
-
+    /**
+     * Método para saber cuantos pares tiene un jugador.
+     * @return el número de pares en la mano.
+     */
     public int paresMano(){
         List<Carta> manoAux = jugadorActual.getMano();
         List<String> valoresMano = new List<>();
@@ -320,6 +313,10 @@ public class Solterona {
         return pares;
     }
 
+    /**
+     * Método para robar una carta al jugador anterior.
+     * @param i - El índice de la carta que vas a robar.
+     */
     public void robarCarta(int i){
         int jugador = numTurno-1;
         if(jugador < 0){
@@ -332,6 +329,9 @@ public class Solterona {
         }
     }
 
+    /**
+     * Método para limpiar la terminal.
+     */
     public void clear(){
         try{
             String operatingSystem = System.getProperty("os.name"); //Check the current operating system

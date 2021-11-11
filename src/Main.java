@@ -4,21 +4,9 @@ import java.util.Scanner;
 public class Main{
 	public static void main(String []args){
 
-		// Colores de fondo
-		String blackBG = "\u001B[40m";
-		String redBG = "\u001B[41m";
-		String greenBG = "\u001B[42m";
-		String yellowBG = "\u001B[43m";
-		String blueBG = "\u001B[44m";
-		String purpleBG = "\u001B[45m";
-		String cyanBG = "\u001B[46m";
-		String whiteBG = "\u001B[47m";
 		// Colores de letra
-	    String red="\033[31m"; 
-	    String green="\033[32m"; 
 	    String yellow="\033[33m";
-	    String cyan="\033[36m";
-	    String black="\u001B[30m";
+
 	    // Reset
 	    String reset="\u001B[0m";
 
@@ -111,7 +99,7 @@ public class Main{
 		while(repe){
 			historial = scanner.next();
 			if(historial.equalsIgnoreCase("si")){
-				System.out.println("Aqui se supone que iba el historial jsjs");
+				System.out.println("Aqui se supone que iba el historial jsjs, por lo que queda como ejercicio al jugador.");
 				repe = false;
 			}else if (historial.equalsIgnoreCase("no")){
 				System.out.println("Ayoos :3");
