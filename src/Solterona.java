@@ -4,7 +4,12 @@ import java.lang.NumberFormatException;
 import java.lang.IndexOutOfBoundsException;
 import java.lang.NullPointerException;
 import java.util.InputMismatchException;
-
+/**
+ * Clase que simula el juego solterona
+ * @author Andrea Alvarado Camacho
+ * @author Alfonso Mondragón Segoviano
+ * @version 1.0
+ */
 public class Solterona {
 
     // Colores de letra

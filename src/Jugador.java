@@ -8,7 +8,6 @@
 public class Jugador {
     protected String nombre;
     protected List<Carta> mano;
-    protected List<Carta> historial;
     protected boolean persona;
 
     /**
@@ -39,22 +38,6 @@ public class Jugador {
       */
     public List<Carta> getMano() {
          return mano;
-     }
-
-     /**
-      * Metodo que regresa el historial del jugador
-      * @return carta con las que inicio el juego, si logro hacer algun par y si se quedo sin cartas.
-      */
-     public String getHistorial(){
-      return historial.toString();
-     }
-
-     /**
-      * Metodo para agregar cartas al historial
-      * @param his - objeto para agregar a la lista del historial
-      */
-     public void agregarHistorial(Carta his){
-      historial.add(historial.size(),his);
      }
 
     /**

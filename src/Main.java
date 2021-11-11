@@ -1,6 +1,10 @@
 import java.util.Scanner;
-
-
+/**
+ * Clase que simula el juego solterona para jugar con demas jugadores o contra la computadora
+ * @author Andrea Alvarado Camacho
+ * @author Alfonso Mondragón Segoviano
+ * @version 1.0
+ */
 public class Main{
 	public static void main(String []args){
 
