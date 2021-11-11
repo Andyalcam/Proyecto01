@@ -3,8 +3,27 @@ import java.util.Scanner;
 import java.lang.NumberFormatException;
 import java.lang.IndexOutOfBoundsException;
 import java.lang.NullPointerException;
+import java.util.InputMismatchException;
 
 public class Solterona {
+
+    // Colores de fondo
+    String blackBG = "\u001B[40m";
+    String redBG = "\u001B[41m";
+    String greenBG = "\u001B[42m";
+    String yellowBG = "\u001B[43m";
+    String blueBG = "\u001B[44m";
+    String purpleBG = "\u001B[45m";
+    String cyanBG = "\u001B[46m";
+    String whiteBG = "\u001B[47m";
+    // Colores de letra
+    String red="\033[31m"; 
+    String green="\033[32m"; 
+    String yellow="\033[33m";
+    String cyan="\033[36m";
+    String black="\u001B[30m";
+    // Reset
+    String reset="\u001B[0m";
 
     Baraja baraja;
     int sizeBaraja;
@@ -13,6 +32,7 @@ public class Solterona {
     Jugador jugadorActual;
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
+    Scanner scanner2 = new Scanner(System.in);
     int numTurno;
 
     /**
@@ -73,6 +93,8 @@ public class Solterona {
      * Método para la inicialización del juego.
      */
     public void juego() {
+        int ind;
+        boolean conti;
         while(!perdedor()){
             if(numTurno == jugadores.size()){
                 numTurno = 0;
@@ -80,23 +102,47 @@ public class Solterona {
             jugadorAnterior = jugadorActual;
             jugadorActual = jugadores.get(numTurno);
             if(jugadorAnterior.getMano().size() != 0){
-                System.out.println("Es el turno de " + jugadorActual.getNombre() + " " + numTurno);
-                robarCarta();
+                System.out.println(green+"Es el turno de " + jugadorActual.getNombre()+reset);
+                if(jugadorActual.isCPU()){
+                    int cartaRandom = random.nextInt(jugadorAnterior.getMano().size());
+                    robarCarta(cartaRandom);
+                }else{
+                    if(jugadorAnterior.getMano().size()-1==0){
+                        System.out.println("Solo puedes robar la carta 0 :3");
+                    }else{
+                        System.out.println("¿Qué carta deseas robar?\tIngresa un número entre 0 y " + (jugadorAnterior.getMano().size()-1));
+                    }
+                    conti = true;
+                    while (conti) {
+                        try{
+                            ind = scanner.nextInt();
+                            robarCarta(ind);
+                            conti = false;
+                        }catch(InputMismatchException e){
+                            System.out.println(yellow+"\t Debes ingresar un número :)"+reset);
+                            scanner.next();
+                        }catch(IndexOutOfBoundsException e){
+                            System.out.println(yellow+"\t Ingresa indices dentro de los rangos :)"+reset);
+                        }catch(NullPointerException e){
+                            System.out.println(yellow+"\t Ingresa indices dentro de los rangos :)"+reset);
+                        } 
+                    }
+                }
+                
                 if(jugadorAnterior.getMano().size()==0){
                     if(numTurno==0){
-                        System.out.println("El jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego");
+                        System.out.println(red+"\t\tEl jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego\n"+reset);
                         jugadores.remove(jugadores.size()-1);
-                        System.out.println(numTurno);
                         numTurno = jugadores.size()-1;
                     }else{
-                        System.out.println("El jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego");
+                        System.out.println(red+"\t\tEl jugador " + jugadorAnterior.getNombre() + " ya no tiene cartas y sale de juego\n"+reset);
                         jugadores.remove(numTurno-1);
-                        System.out.println(numTurno);
                         numTurno--;
                     }
                 }
                 turno();
             }
+            clear();
             numTurno++;
             try{
                 Thread.sleep(1000);
@@ -105,7 +151,7 @@ public class Solterona {
         for(int i = 0 ; i < jugadores.size(); i++){
             if(jugadores.get(i).getMano().size() == 1){
                 System.out.println("Perdió " + jugadores.get(i).getNombre() + " , se quedo con la solterona jijijija");
-                System.out.println("La solterona fue: " + jugadores.get(i).getManoToString());
+                System.out.println("La solterona fue: " + jugadores.get(i).getMano());
             }
         }
     }
@@ -161,11 +207,13 @@ public class Solterona {
                     }
                 }
             }
+            jugadorActual.intercambio();
             System.out.println("Ya no tienes mas pares :c" + "\n");
         } else {//Si es una persona
-            int i,j;
+            int a,b;
             boolean repe = true;
             String tupla = "";
+            String inter;
             System.out.println((jugadorActual.printDeck()));
             int pares = paresMano();
             if(pares == 1){
@@ -173,51 +221,75 @@ public class Solterona {
             }else if(pares !=0){
                 System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
             }
-            while (repe) {
-                while (pares != 0) {
-                    try{
-                        System.out.println("Ingresa los indices de las parejas Ej: 2,3");
-                        tupla = scanner.nextLine().trim();
-                        i = Integer.parseInt(tupla.split(",")[0]);
-                        j = Integer.parseInt(tupla.split(",")[1]);
-                        if(i!=j){
-                            if(jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()){
-                                if(i<j){
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){}
+            while (pares != 0) {
+                for(int i=0; i<jugadorActual.getMano().size(); i++){
+                    for(int j=0; j<jugadorActual.getMano().size(); j++){
+                        if(i != j){
+                            if (jugadorActual.getMano().get(i).getValor() == jugadorActual.getMano().get(j).getValor()) {
+                                if (i < j) {
                                     jugadorActual.getMano().remove(i);
-                                    jugadorActual.getMano().remove(j-1);
-                                }else{
+                                    jugadorActual.getMano().remove(j - 1);
+                                } else {
                                     jugadorActual.getMano().remove(i);
                                     jugadorActual.getMano().remove(j);
                                 }
                                 System.out.println(jugadorActual.printDeck());
+                                try{
+                                    Thread.sleep(1000);
+                                }catch (InterruptedException e){}
                                 pares--;
-                                sizeBaraja-=2;
-                                if(pares == 1){
-                                    System.out.println(jugadorActual.getNombre() + " tienes " + pares + " par");
-                                }else{
-                                    System.out.println(jugadorActual.getNombre() + " tienes " + pares + " pares");
-                                }
-                            }else{
-                                System.out.println("\tTus cartas no son pares :c\n");
+                                sizeBaraja -= 2;
+                                break;
                             }
-                            repe = false;
-                        }else{
-                            System.out.println("\t No puedes ingresar las mismas cartas :c\n");
-                            repe = true;
                         }
-                    }catch(NumberFormatException e){
-                        System.out.println("\t Intentalo de nuevo. Sigue el ejemplo :)\n");
-                        repe = true;
-                    }catch(IndexOutOfBoundsException e){
-                        System.out.println("\t Ingresa indices dentro de los rangos :)\n");
-                        repe = true;
-                    }catch(NullPointerException e){
-                        System.out.println("\t Ingresa indices dentro de los rangos :)\n");
-                        repe = true;
-                    } 
+                    }
                 }
-                System.out.println("Ya no tienes mas pares :c\n");
-                repe = false;
+            }
+            repe = true;
+            boolean repe2;
+            while(repe){
+                if(jugadorActual.getMano().size()<2){
+                    break;
+                }
+                System.out.println("¿Deseas intercambiar tus cartas?\tSi/No");
+                inter = scanner.next();
+                if(inter.equalsIgnoreCase("si")){
+                    System.out.println("Ingresa los indices de las parejas Ej: 2,3");
+
+                    repe2 = true;
+                    while(repe2){
+                        try{
+                            tupla = scanner2.nextLine().trim();
+                            a = Integer.parseInt(tupla.split(",")[0]);
+                            b = Integer.parseInt(tupla.split(",")[1]);
+                            if(a!=b){
+                                    jugadorActual.swap(a,b);
+                                    System.out.println(jugadorActual.printDeck());
+                                    repe2 = false;
+                            }else if(a==b){
+                                System.out.println(yellow+"\t No puedes ingresar las mismas cartas :c\n"+reset);
+                                repe2 = true;
+                            }
+                        }catch(NumberFormatException e){
+                            System.out.println(yellow+"\t Intentalo de nuevo. Sigue el ejemplo :)\n"+reset);
+                            repe2 = true;
+                        }catch(IndexOutOfBoundsException e){
+                            System.out.println(yellow+"\t Ingresa indices dentro de los rangos :)\n"+reset);
+                            repe2 = true;
+                        }catch(NullPointerException e){
+                            System.out.println(yellow+"\t Ingresa indices dentro de los rangos :)\n"+reset);
+                            repe2 = true;
+                        } 
+                    }
+                    repe = true;
+                }else if (inter.equalsIgnoreCase("no")){
+                    repe = false;
+                }else{
+                    System.out.println(yellow+"\nDebes escribir 'si' o 'no'\n"+reset);
+                }
             }
         }
     }
@@ -248,18 +320,32 @@ public class Solterona {
         return pares;
     }
 
-    public void robarCarta(){
+    public void robarCarta(int i){
         int jugador = numTurno-1;
         if(jugador < 0){
             jugador = jugadores.size()-1;
         }
         if(jugadores.get(jugador).getMano().size() != 0){
-            int cartaRandom = random.nextInt(jugadores.get(jugador).getMano().size());
-            Carta carta = jugadores.get(jugador).getMano().get(cartaRandom);
-            jugadores.get(jugador).getMano().remove(cartaRandom);
+            Carta carta = jugadores.get(jugador).getMano().get(i);
+            jugadores.get(jugador).getMano().remove(i);
             jugadores.get(numTurno).agregarCarta(carta);
         }
     }
 
-
+    public void clear(){
+        try{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+            if(operatingSystem.contains("Windows")){
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            } else {
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }

@@ -8,6 +8,7 @@
 public class Jugador {
     protected String nombre;
     protected List<Carta> mano;
+    protected List<Carta> historial;
     protected boolean persona;
 
     /**
@@ -19,6 +20,7 @@ public class Jugador {
     public Jugador(String nombre, boolean persona) {
        this.nombre = nombre;
        mano = new List<>();
+       historial = new List<>();
        this.persona = persona;
     }
 
@@ -39,16 +41,21 @@ public class Jugador {
          return mano;
      }
 
-
+     /**
+      * Metodo que regresa el historial del jugador
+      * @return carta con las que inicio el juego, si logro hacer algun par y si se quedo sin cartas.
+      */
+     public String getHistorial(){
+      return historial.toString();
+     }
 
      /**
-     * Método para imprimir la mano del jugador
-     *
-     * @return La mano del jugador
-     */
-    public String getManoToString() {
-       return mano.toString();
-    }
+      * Metodo para agregar cartas al historial
+      * @param his - objeto para agregar a la lista del historial
+      */
+     public void agregarHistorial(Carta his){
+      historial.add(historial.size(),his);
+     }
 
     /**
      * Método para agregar una carta a la mano del jugador
@@ -66,6 +73,37 @@ public class Jugador {
      */
     public Boolean isCPU() {
        return !persona;
+    }
+
+    /**
+     * Método que genera números aleatorios entre 0 y max.
+     */
+    private int random(int max) {
+        return (int) Math.round(Math.random() * max + 0.5);
+    }
+
+    public void intercambio(){
+      if(mano.size() > 1){
+         for(int i = 0; i < mano.size(); i++){
+            int numRan = random(mano.size()-1);
+            Carta temporal = mano.remove(numRan);
+            mano.add(0,temporal);
+        }
+      }
+    }
+
+    public void swap(int i, int j){
+      if(mano.size()>1){
+         if(i<j){
+            Carta temp = mano.remove(i);
+            mano.add(i,mano.remove(j-1));
+            mano.add(j,temp);
+         }else{
+            Carta temp = mano.remove(j);
+            mano.add(j,mano.remove(i-1));
+            mano.add(i,temp);
+         }
+      }
     }
 
     /**
